@@ -1,0 +1,35 @@
+name: Daily News Briefing
+
+on:
+  schedule:
+    # KST 09:00 = UTC 00:00
+    - cron: "0 0 * * *"
+  workflow_dispatch:  # GitHub UI에서 수동 실행 가능
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Python 설치
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: uv 설치
+        uses: astral-sh/setup-uv@v3
+
+      - name: 의존성 설치
+        run: uv sync
+
+      - name: 브리핑 실행
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+        run: uv run python -m src.main
