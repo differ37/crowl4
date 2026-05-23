@@ -1,48 +1,36 @@
-# 📰 Daily News Briefing → Telegram
+# Gravity 사업PM 면접 준비 노트
 
-매일 아침 9시(KST)에 네이트 랭킹 뉴스 6개 카테고리(종합/스포츠/연예/경제/사회/IT·과학)의 TOP 10을 크롤링하고, GPT로 한줄 요약한 뒤 텔레그램 봇으로 받아보는 자동화 프로젝트.
+그라비티(Gravity Co., Ltd.) Mobile/PC 사업PM 채용 대비 종합 자료.
+Apple 공식 사이트 스타일의 단일 HTML 페이지 — 모바일에서도 그대로 읽힙니다.
 
-## 흐름
+## 보기
 
-```
-[네이트 랭킹] → [본문 미리보기] → [GPT 한줄요약] → [텔레그램 메시지]
-                          ↑ GitHub Actions cron (매일 09:00 KST)
-```
+브라우저에서 [index.html](./index.html)을 열면 바로 보입니다.
+GitHub Pages를 활성화하면 휴대폰에서 URL로 접근할 수 있습니다.
 
-## 구성 파일
+## 구성 (11개 챕터)
 
-| 파일 | 역할 |
-|---|---|
-| `src/fetch_news.py` | 네이트 6개 카테고리 × TOP 10 + 본문 미리보기 수집 |
-| `src/summarize.py` | GPT로 한줄 요약 (병렬 처리) |
-| `src/telegram_send.py` | 텔레그램 메시지 포맷 + 전송 |
-| `src/main.py` | 오케스트레이션 엔트리 |
-| `.github/workflows/daily-briefing.yml` | GitHub Actions cron 정의 |
+1. 회사 종합 프로필
+2. 최근 실적
+3. 라그나로크 허브 전략
+4. 게임 라인업
+5. 사업PM 직무 이해
+6. 시장 트렌드
+7. 예상 면접 질문 — 실무 20
+8. 예상 면접 질문 — 인성 20
+9. 보충 리서치 (ChatGPT 정리본 · 게임별 사업PM 관점 + 추가 Q&A 20)
+10. 심층 분석 노트 (Gemini 정리본 · 2026 Q1 어닝 + 트랜스미디어 + 추가 Q&A 20)
+11. 면접 직전 체크리스트
 
-## 로컬 실행
+총 **80개의 예상 면접 질문과 모범 답안**이 정리되어 있습니다.
 
-```bash
-uv sync
-cp .env.example .env
-# .env 파일에 토큰/키 입력
-uv run python -m src.main
-```
+## GitHub Pages 활성화
 
-## GitHub Secrets (필수)
+이 저장소가 Private이라면 GitHub Pro 이상 플랜이 필요합니다 (Free 플랜은 Public 저장소만 Pages 가능).
 
-GitHub 레포 → Settings → Secrets and variables → Actions → New repository secret 에서 아래 4개를 등록:
+1. 저장소 페이지 → **Settings → Pages**
+2. **Source**: Deploy from a branch
+3. **Branch**: `main` / Folder: `/ (root)` → Save
+4. 1~2분 후 `https://differ37.github.io/crowl4/` 로 접속
 
-| Secret 이름 | 값 |
-|---|---|
-| `TELEGRAM_BOT_TOKEN` | BotFather에서 받은 봇 토큰 |
-| `TELEGRAM_CHAT_ID` | 본인의 chat_id |
-| `OPENAI_API_KEY` | OpenAI API 키 |
-| `OPENAI_MODEL` | `gpt-5.5` (또는 `gpt-5.4-mini`, `gpt-5.1` 등) |
-
-## 수동 실행 (디버그용)
-
-GitHub Actions 탭 → "Daily News Briefing" → "Run workflow" 클릭.
-
-## 정책 주의
-
-네이트 사이트의 `robots.txt`는 일반 봇 크롤링을 허용하지 않는다. 이 프로젝트는 개인 사용 목적으로 하루 1회 60건 수준의 요청만 발생시키지만, 사이트 정책 변경 시 차단될 수 있으며 약관상 회색지대다. **상업적 이용 금지.**
+휴대폰 Safari에서 접속 후 공유 → "홈 화면에 추가"로 앱처럼 사용 가능.
